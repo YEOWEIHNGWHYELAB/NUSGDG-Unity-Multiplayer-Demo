@@ -15,7 +15,7 @@ public class PlayerUI : MonoBehaviour
 
     private void Awake()
     {
-        healthbar = GetComponent<HealthBar>();
+        healthbar = GetComponentInChildren<HealthBar>();
     }
 
     private void Start()
@@ -32,6 +32,14 @@ public class PlayerUI : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Debug.Log("Take Damage");
+                healthbar.TakeDamage(damage);
+            } 
+            
+        } 
+        else {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                Debug.Log("Take Damage Enemy");
                 healthbar.TakeDamage(damage);
             }
         }
