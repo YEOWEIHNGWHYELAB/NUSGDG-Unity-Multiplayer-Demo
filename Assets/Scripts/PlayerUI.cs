@@ -8,6 +8,7 @@ public class PlayerUI : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public int damage = 20;
+    Animator anim;
 
     public HealthBar healthbar;
 
@@ -20,6 +21,7 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         view = GetComponent<PhotonView>();
         healthbar.SetMaxHealth(maxHealth);
         Debug.Log("Take Health");
