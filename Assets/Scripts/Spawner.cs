@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
     public float startTimeBtwSpawns;
     float timeBtwSpawns;
     public int numberEnemy;
+    private int currentNumberEnemy;
      
     private void Start()
     {
@@ -18,7 +19,7 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient == false || PhotonNetwork.CurrentRoom.PlayerCount != 2)
+        if (PhotonNetwork.IsMasterClient == false || PhotonNetwork.CurrentRoom.PlayerCount != 2 || currentNumberEnemy >= numberEnemy)
         {
             return;
         }
@@ -27,6 +28,8 @@ public class Spawner : MonoBehaviour
         {
             Vector3 SpawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)].position;
             PhotonNetwork.Instantiate(enemy.name, SpawnPosition, Quaternion.identity);
+            currentNumberEnemy += 1;
+
             timeBtwSpawns = startTimeBtwSpawns;
         }
         else

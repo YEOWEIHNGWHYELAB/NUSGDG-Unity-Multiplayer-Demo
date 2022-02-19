@@ -19,8 +19,8 @@ public class Enemy : MonoBehaviour
         float distance1 = Vector2.Distance(transform.position, players[0].transform.position);
         float distance2 = Vector2.Distance(transform.position, players[1].transform.position);
 
-        Debug.Log(distance1);
-        Debug.Log(distance2);
+        // Debug.Log(distance1);
+        // Debug.Log(distance2);
 
         if (distance1 < distance2)
         {
@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
 
         if (nearestPlayer != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, nearestPlayer.transform.position, speed * Time.deltaTime); ;
+            transform.position = Vector2.MoveTowards(transform.position, nearestPlayer.transform.position, speed * Time.deltaTime);
         }
     }
 
