@@ -38,12 +38,5 @@ public class PlayerUI : MonoBehaviour
             } 
             
         } 
-        else {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Debug.Log("Take Damage Enemy");
-                healthbar.TakeDamage(damage);
-            }
-        }
     }
 }
