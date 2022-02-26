@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent (typeof (Controller2D))]
 public class Player : MonoBehaviour
 {
-    public float jumpHeight = 3.5f;
-    public float timeToJumpApex = 0.4f;
+    public float jumpHeight = 4;
+    public float timeToJumpApex = .4f;
     float accelerationTimeAirborne = .2f;
     float accelerationTimeGrounded = .1f;
     float moveSpeed = 6;
@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
         // Prevent accumulation of gravity
         if (controller.collisions.above || controller.collisions.below)
         {
