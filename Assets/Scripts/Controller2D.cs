@@ -16,6 +16,7 @@ public class Controller2D : MonoBehaviour
 
     BoxCollider2D collider;
     RaycaseOrigins raycastOrigins;
+    public CollisionInfo collisions;
 
     void Start()
     {
@@ -26,6 +27,8 @@ public class Controller2D : MonoBehaviour
     public void Move(Vector3 velocity)
     {
         UpdateRaycaseOrigins();
+        collisions.Reset();
+
         //  Code to handle collisions and modify velocity
         if (velocity.x != 0)
         {
@@ -63,6 +66,11 @@ public class Controller2D : MonoBehaviour
             {
                 velocity.x = (hit.distance - skinWidth) * directionX;
                 rayLength = hit.distance;
+
+                // If hit something and going left
+                collisions.left = directionX == -1;
+                // If hit something and going right
+                collisions.right = directionX == 1;
             }
         }
     }
@@ -79,9 +87,11 @@ public class Controller2D : MonoBehaviour
                 ? raycastOrigins.bottomLeft
                 : raycastOrigins.topLeft;
             rayOrigin += Vector2.right * (verticalRaySpacing * i + velocity.x);
-            RaycastHit2D hit = Physics2D.Raycast(rayOrigin, 
+            RaycastHit2D hit = Physics2D.Raycast(
+                rayOrigin, 
                 Vector2.up * directionY,
-                rayLength, collisionMask);
+                rayLength,
+                collisionMask);
             Debug.DrawRay(
                 rayOrigin,
                 Vector2.up * directionY * rayLength,
@@ -91,6 +101,11 @@ public class Controller2D : MonoBehaviour
             {
                 velocity.y = (hit.distance - skinWidth) * directionY;
                 rayLength = hit.distance;
+
+                // If hit something and going down
+                collisions.below = directionY == -1;
+                // If hit something and going up
+                collisions.above = directionY == 1;
             }
         }
     }
@@ -126,5 +141,17 @@ public class Controller2D : MonoBehaviour
     {
         public Vector2 topLeft, topRight;
         public Vector2 bottomLeft, bottomRight;
+    }
+
+    public struct CollisionInfo
+    {
+        public bool above, below;
+        public bool left, right;
+
+        public void Reset()
+        {
+            above = below = false;
+            left = right = false;
+        }
     }
 }
