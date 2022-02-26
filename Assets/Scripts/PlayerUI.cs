@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 
 public class PlayerUI : MonoBehaviour
@@ -14,17 +15,13 @@ public class PlayerUI : MonoBehaviour
 
     PhotonView view;
 
-    private void Awake()
-    {
-        healthbar = GetComponentInChildren<HealthBar>();
-    }
-
     private void Start()
     {
         anim = GetComponent<Animator>();
         view = GetComponent<PhotonView>();
+        healthbar = GetComponentInChildren<HealthBar>();
         healthbar.SetMaxHealth(maxHealth);
-        Debug.Log("Take Health");
+        // Debug.Log("Take Health");
     }
 
     private void Update()
@@ -33,10 +30,9 @@ public class PlayerUI : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("Take Damage");
                 healthbar.TakeDamage(damage);
-            } 
-            
+                // Debug.Log("Take Damage");
+            }
         } 
     }
 }

@@ -33,6 +33,6 @@ public class HealthBar : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        slider.value -= damage;
+        view.RPC("TakeDamageRPC", RpcTarget.All);
     }
 }
