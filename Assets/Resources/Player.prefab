@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1772547868343561497}
   - component: {fileID: 1772547868343561502}
   - component: {fileID: 5464639579458979599}
+  - component: {fileID: 84137510992446140}
   - component: {fileID: 8635797938815656904}
   - component: {fileID: 2246001888652976262}
   m_Layer: 0
@@ -171,6 +172,22 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &84137510992446140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772547868343561493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6659077dc5b589849bd391549980426f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  damage: 20
+  healthbar: {fileID: 0}
 --- !u!114 &8635797938815656904
 MonoBehaviour:
   m_ObjectHideFlags: 0
