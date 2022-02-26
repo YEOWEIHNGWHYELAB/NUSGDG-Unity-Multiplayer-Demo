@@ -3163,7 +3163,6 @@ namespace Photon.Pun
             // only apply Settings if LogLevel is default ( see ServerSettings.cs), else it means it's been set programmatically
             if (PhotonNetwork.NetworkingClient.LoadBalancingPeer.DebugOut == DebugLevel.ERROR)
             {
-                //Debug.Log(PhotonServerSettings.AppSettings == null);
                 PhotonNetwork.NetworkingClient.LoadBalancingPeer.DebugOut = PhotonServerSettings.AppSettings.NetworkLogging;
             }
         }
