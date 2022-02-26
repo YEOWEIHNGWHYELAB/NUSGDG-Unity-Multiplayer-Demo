@@ -69,7 +69,14 @@ public class Controller2D : MonoBehaviour
                 float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
                 if (i == 0 && slopeAngle <= maxClimbAngle)
                 {
+                    float distanceToSlopStart = 0;
+                    if (slopeAngle != collisions.slopeAngleOld)
+                    {
+                        distanceToSlopStart = hit.distance - skinWidth;
+                        velocity.x -= distanceToSlopStart * directionX;
+                    }
                     ClimbSlope(ref velocity, slopeAngle);
+                    velocity.x += distanceToSlopStart * directionX;
                 }
 
 
@@ -77,6 +84,12 @@ public class Controller2D : MonoBehaviour
                 {
                     velocity.x = (hit.distance - skinWidth) * directionX;
                     rayLength = hit.distance;
+
+                    // Prevent jittering when climbing slope and collide wall
+                    if (collisions.climbingSlope)
+                    {
+                        velocity.y = Mathf.Tan(collisions.slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x);
+                    }
 
                     // If hit something and going left
                     collisions.left = directionX == -1;

@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        print("Gravity: " + gravity + "  Jump Velocity: " + jumpVelocity);
         // Prevent accumulation of gravity
         if (controller.collisions.above || controller.collisions.below)
         {
