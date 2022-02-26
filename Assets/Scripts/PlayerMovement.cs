@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D body;
     PhotonView view;
-    public HealthBar healthbar;
+    public GameObject myBar;
+    public GameObject broBar;
 
     private void Awake()
     {
@@ -18,8 +19,12 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         view = GetComponent<PhotonView>();
-        healthbar = FindObjectOfType<HealthBar>();
-        healthbar.SetMaxHealth();
+
+        myBar = GameObject.Find("HealthBar");
+        broBar = GameObject.Find("MyBar");
+        myBar.GetComponent<HealthBar>().SetMaxHealth();
+        broBar.GetComponent<HealthBar>().SetMaxHealth();
+
         Debug.Log("Take Health");
     }
 
@@ -29,13 +34,23 @@ public class PlayerMovement : MonoBehaviour
         {
             body.velocity = new Vector2(Input.GetAxis("Horizontal") * 2, Input.GetAxis("Vertical") * 2);
 
-            if (Input.GetKeyDown(KeyCode.Space)) 
-            { 
-                healthbar.TakeDamage();
-                Debug.Log("Take Damage");
-            } else if (Input.GetKeyDown(KeyCode.Return)) {
-                healthbar.HealHealth();
-                Debug.Log("Healing");
+            if (Input.GetKeyDown(KeyCode.Space) && PhotonNetwork.IsMasterClient) 
+            {
+                myBar.GetComponent<HealthBar>().TakeDamage();
+                Debug.Log("Take Damage On Player 1");
+            } else if (Input.GetKeyDown(KeyCode.Return) && PhotonNetwork.IsMasterClient) {
+                myBar.GetComponent<HealthBar>().HealHealth();
+                Debug.Log("Healing On Player 1");
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && !(PhotonNetwork.IsMasterClient))
+            {
+                myBar.GetComponent<HealthBar>().TakeDamage();
+                Debug.Log("Take Damage On Player 2");
+            } else if (Input.GetKeyDown(KeyCode.Return) && !(PhotonNetwork.IsMasterClient))
+            {
+                myBar.GetComponent<HealthBar>().HealHealth();
+                Debug.Log("Healing On Player 2");
             }
         }
     }
