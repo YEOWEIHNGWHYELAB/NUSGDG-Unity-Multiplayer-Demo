@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
         if (nearestPlayer != null)
         {
             transform.position = Vector2.MoveTowards(transform.position, nearestPlayer.transform.position, speed * Time.deltaTime);
-            Debug.Log("Moving Towards");
+            // Debug.Log("Moving Towards");
         }
     }
 

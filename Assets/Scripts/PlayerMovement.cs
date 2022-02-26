@@ -33,6 +33,9 @@ public class PlayerMovement : MonoBehaviour
             { 
                 healthbar.TakeDamage();
                 Debug.Log("Take Damage");
+            } else if (Input.GetKeyDown(KeyCode.Return)) {
+                healthbar.HealHealth();
+                Debug.Log("Healing");
             }
         }
     }

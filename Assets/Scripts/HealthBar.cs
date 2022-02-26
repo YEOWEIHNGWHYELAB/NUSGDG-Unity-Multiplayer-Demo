@@ -32,6 +32,17 @@ public class HealthBar : MonoBehaviour
         view.RPC("TakeDamageRPC", RpcTarget.All);
     }
 
+    public void HealHealth()
+    {
+        view.RPC("HealHealthRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void HealHealthRPC()
+    {
+        slider.value += damage;
+    }
+
     [PunRPC]
     void TakeDamageRPC()
     {
