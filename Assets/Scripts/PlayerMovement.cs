@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
         myBar = GameObject.Find("HealthBar");
         broBar = GameObject.Find("MyBar");
+
         myBar.GetComponent<HealthBar>().SetMaxHealth();
         broBar.GetComponent<HealthBar>().SetMaxHealth();
 
@@ -34,23 +35,31 @@ public class PlayerMovement : MonoBehaviour
         {
             body.velocity = new Vector2(Input.GetAxis("Horizontal") * 2, Input.GetAxis("Vertical") * 2);
 
-            if (Input.GetKeyDown(KeyCode.Space) && PhotonNetwork.IsMasterClient) 
+            if (PhotonNetwork.IsMasterClient)
             {
-                myBar.GetComponent<HealthBar>().TakeDamage();
-                Debug.Log("Take Damage On Player 1");
-            } else if (Input.GetKeyDown(KeyCode.Return) && PhotonNetwork.IsMasterClient) {
-                myBar.GetComponent<HealthBar>().HealHealth();
-                Debug.Log("Healing On Player 1");
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    myBar.GetComponent<HealthBar>().TakeDamage();
+                    Debug.Log("Take Damage On Player 1");
+                }
+                else if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    myBar.GetComponent<HealthBar>().HealHealth();
+                    Debug.Log("Healing On Player 1");
+                }
             }
-
-            if (Input.GetKeyDown(KeyCode.Space) && !(PhotonNetwork.IsMasterClient))
+            else
             {
-                myBar.GetComponent<HealthBar>().TakeDamage();
-                Debug.Log("Take Damage On Player 2");
-            } else if (Input.GetKeyDown(KeyCode.Return) && !(PhotonNetwork.IsMasterClient))
-            {
-                myBar.GetComponent<HealthBar>().HealHealth();
-                Debug.Log("Healing On Player 2");
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    broBar.GetComponent<HealthBar>().TakeDamage();
+                    Debug.Log("Take Damage On Player 2");
+                }
+                else if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    broBar.GetComponent<HealthBar>().HealHealth();
+                    Debug.Log("Healing On Player 2");
+                }
             }
         }
     }
