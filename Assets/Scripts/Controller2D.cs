@@ -72,13 +72,17 @@ public class Controller2D : MonoBehaviour
                     ClimbSlope(ref velocity, slopeAngle);
                 }
 
-                velocity.x = (hit.distance - skinWidth) * directionX;
-                rayLength = hit.distance;
 
-                // If hit something and going left
-                collisions.left = directionX == -1;
-                // If hit something and going right
-                collisions.right = directionX == 1;
+                if (!collisions.climbingSlope || slopeAngle > maxClimbAngle)
+                {
+                    velocity.x = (hit.distance - skinWidth) * directionX;
+                    rayLength = hit.distance;
+
+                    // If hit something and going left
+                    collisions.left = directionX == -1;
+                    // If hit something and going right
+                    collisions.right = directionX == 1;
+                }
             }
         }
     }
@@ -122,8 +126,15 @@ public class Controller2D : MonoBehaviour
     void ClimbSlope(ref Vector3 velocity, float slopeAngle)
     {
         float moveDistance = Mathf.Abs(velocity.x);
-        velocity.y = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
-        velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+        float climbVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
+
+        if (velocity.y <= climbVelocityY) { 
+            velocity.y = climbVelocityY;
+            velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
+            collisions.below = true;
+            collisions.climbingSlope = true;
+            collisions.slopeAngle = slopeAngle;
+        }
     }
 
     void UpdateRaycaseOrigins()
@@ -165,10 +176,16 @@ public class Controller2D : MonoBehaviour
         public bool above, below;
         public bool left, right;
 
+        public bool climbingSlope;
+        public float slopeAngle, slopeAngleOld;
+
         public void Reset()
         {
             above = below = false;
             left = right = false;
+            climbingSlope = false;
+            slopeAngleOld = slopeAngle;
+            slopeAngle = 0;
         }
     }
 }
