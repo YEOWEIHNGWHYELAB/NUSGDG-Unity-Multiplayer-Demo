@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D body;
     PhotonView view;
+    public HealthBar healthbar;
 
     private void Awake()
     {
@@ -16,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         view = GetComponent<PhotonView>();
+        healthbar = FindObjectOfType<HealthBar>();
+        healthbar.SetMaxHealth();
+        Debug.Log("Take Health");
     }
 
     private void Update()
@@ -23,6 +28,12 @@ public class PlayerMovement : MonoBehaviour
         if (view.IsMine)
         {
             body.velocity = new Vector2(Input.GetAxis("Horizontal") * 2, Input.GetAxis("Vertical") * 2);
+
+            if (Input.GetKeyDown(KeyCode.Space)) 
+            { 
+                healthbar.TakeDamage();
+                Debug.Log("Take Damage");
+            }
         }
     }
 }

@@ -8,22 +8,18 @@ public class HealthBar : MonoBehaviour
 {
     public Slider slider;
     PhotonView view;
+    public int maxhealth = 100;
+    public int damage = 20;
 
     private void Start()
     {
         view = GetComponent<PhotonView>();
     }
 
-    [PunRPC]
-    void TakeDamageRPC(int damage)
+    public void SetMaxHealth()
     {
-        slider.value -= damage;
-    }
-
-    public void SetMaxHealth(int health)
-    {
-        slider.maxValue = health;
-        slider.value = health;
+        slider.maxValue = maxhealth;
+        slider.value = maxhealth;
     }
 
     public void SetHealth(int health)
@@ -31,8 +27,14 @@ public class HealthBar : MonoBehaviour
         slider.value = health;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
         view.RPC("TakeDamageRPC", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void TakeDamageRPC()
+    {
+        slider.value -= damage;
     }
 }
